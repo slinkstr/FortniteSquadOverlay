@@ -5,18 +5,18 @@ using System.Windows.Forms;
 
 namespace FortniteSquadOverlayClient
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private int consoleHeight;
         private bool firstShow;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             consoleHeight = consoleLogTextBox.Size.Height;
-            Text += " v" + Application.ProductVersion;
-            Icon = Icon.ExtractAssociatedIcon(AppDomain.CurrentDomain.FriendlyName);
-            notifyIcon.Icon = Icon.ExtractAssociatedIcon(AppDomain.CurrentDomain.FriendlyName);
+            Text += " v" + MiscUtil.CurrentVersion();
+            Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            notifyIcon.Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
             firstShow = true;
         }
         
