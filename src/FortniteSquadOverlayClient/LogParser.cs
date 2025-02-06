@@ -104,6 +104,14 @@ namespace FortniteSquadOverlayClient
                 },
             };
 
+            public static LogAction PartyLeft = new LogAction(new Regex(LineStart + @"LogOnlineParty: MCP: OnLeavePartyComplete: User=\[[0-9a-fA-F]{32}\] Party=\[V2:[0-9a-fA-F]{32}\] TaskResult=\[.*\]", regexOptions))
+            {
+                Action = (match) =>
+                {
+                    Program.CurrentSquad.Clear();
+                }
+            };
+
             public static LogAction PartyMemberReadyState = new LogAction(new Regex(LineStart + @"LogMatchmakingUtility: \[HandlePartyMemberReadinessChanged called\] MCP:(?<UserId>[0-9a-fA-F]{5}[0-9a-fA-F\.]{3,22}[0-9a-fA-F]{5}), Party \(V2:[0-9a-fA-F]{32}\) readiness changed to: (?<State>.*)$", regexOptions))
             {
                 Action = (match) =>
