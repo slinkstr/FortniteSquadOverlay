@@ -12,7 +12,7 @@ namespace FortniteSquadOverlayClient
             foreach (var pos in positions.ShieldIcon)
             {
                 var pix = screenshot.GetPixel(pos.X, pos.Y);
-                if (BrightEnough(pix, 190)) { return true; }
+                if (BrightEnough(pix, 175)) { return true; }
             }
             // debug: All shield indicator checks failed
             return false;
