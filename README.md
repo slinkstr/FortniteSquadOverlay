@@ -1,69 +1,23 @@
-# FortniteOverlay
+# FortniteSquadOverlay
 
 ![Screenshot of the overlay in-game.](preview-ingame.png)
 
 ![Screenshot of the main and config window.](preview-window.png)
 
-Gear overlay for Fortnite. Automatically gets current squad as you play and overlays a screenshot of their gear in the top-left corner if they're also running it.
+Squad gear overlay for Fortnite. Automatically gets current squad as you play and overlays their gear in the top-left corner if they're also running it.
 
-Designed for 100% HUD scale at 1080p or 1440p. Other resolutions and scales are calculated from these and may not be accurate.
+Designed for 100% HUD scale at 1080p or 1440p. Functions with other resolutions/scales, but small rounding errors may degrade the experience.
 
-Downloads ~5MB/hr per squadmate and uploads ~5MB/hr. Doesn't download or upload unless Fortnite is open and you're in a party with other players.
+Downloads ~5MB/hr per squadmate and uploads ~5MB/hr. Doesn't download or upload unless Fortnite is open and you're in a party with other players. 
 
 ## Config
 
-Config file is %LOCALAPPDATA%/FortniteOverlay/config.json and will be created on first launch if it doesn't already exist.
+Config file is %LOCALAPPDATA%/FortniteOverlay/config.json.
 
-Secret key, upload endpoint, and image location need to be provided by someone with a server; see [Server Setup](#server-setup) to host.
+Secret key, upload endpoint, and image location need to be provided by your server host.
 
-## Server Setup
+## [Server Setup](SERVER-SETUP.md)
 
-Server uses NGINX autoindexing and a [modified ShareX uploader (included as upload.php)](upload.php) to send and receive images.
+## Building
 
-Make sure to change the secret key.
-
-Example NGINX config:
-
-```
-server {
-    listen 443 ssl;
-    server_name example.com;
-
-    root /var/www/example.com;
-    index index.html index.htm index.php;
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    location /fortnitegear {
-        location ~ \.php$ {
-            include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/run/php/php7.4-fpm.sock;
-        }
-
-        location ~ /images {
-            autoindex on;
-            autoindex_format json;
-        }
-    }
-}
-```
-
-Folder structure:
-
-```
-var
-└─ www
-   └─ example.com
-      ├─ ...
-      └─ fortnitegear
-         ├─ upload.php
-         └─ images
-            └─ ...
-```
-
-Example cronjob to purge images older than 1 day every day at midnight:
-
-```
-0 0 * * * find /var/www/example.com/fortnitegear/images -type f -mtime +1 -exec rm -f {} \;
-```
+Test data is located in a submodule. Run `git submodule init` and `git submodule update` after cloning.
