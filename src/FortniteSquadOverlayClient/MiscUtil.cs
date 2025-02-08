@@ -20,44 +20,6 @@ namespace FortniteSquadOverlayClient
         private static string configFolder = Path.Combine(localAppData, "FortniteOverlay");
         private static string fullConfigPath = Path.Combine(configFolder, "config.json");
 
-        public static async Task CheckForUpdates(HttpClient httpClient = null)
-        {
-            if (httpClient == null) { httpClient = new HttpClient(); }
-
-            string host = "https://api.github.com";
-            string path = "/repos/slinkstr/FortniteSquadOverlay/releases";
-            try
-            {
-                var response = await httpClient.GetAsync(host + path);
-                response.EnsureSuccessStatusCode();
-
-                string content = await response.Content.ReadAsStringAsync();
-                var latest = JArray.Parse(content)[0];
-                Version latestVersion = Version.Parse(latest["tag_name"].ToString().Substring(1));
-                Version currentVersion = Version.Parse(CurrentVersion());
-
-                if (latestVersion.CompareTo(currentVersion) > 0)
-                {
-                    Program.form.SetUpdateNotice($"New update available (v{latestVersion})", latest["html_url"].ToString());
-                }
-                else
-                {
-                    Program.form.SetUpdateNotice("");
-                }
-            }
-            catch (Exception exc)
-            {
-                Program.form.Log("Unable to check for updates. Error:\n" + exc.ToString());
-                Program.form.SetUpdateNotice("Unable to check for updates.");
-            }
-        }
-
-        public static string CurrentVersion()
-        {
-            Version ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            return $"{ver.Major}.{ver.Minor}.{ver.Build}";
-        }
-
         public static async Task<List<string>> GetOrder(HttpClient httpClient = null)
         {
             if (httpClient == null) { httpClient = new HttpClient(); }
@@ -76,7 +38,7 @@ namespace FortniteSquadOverlayClient
             }
             catch (Exception exc)
             {
-                Program.form.Log("Unable to get squad order. Error:\n" + exc.ToString());
+                Program.mainForm.Log("Unable to get squad order. Error:\n" + exc.ToString());
             }
 
             return order;

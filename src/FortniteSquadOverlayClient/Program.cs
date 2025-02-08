@@ -16,26 +16,27 @@ namespace FortniteSquadOverlayClient
 {
     internal static class Program
     {
-        public static MainForm form;
-        public static OverlayForm overlayForm;
+        public static MainForm      mainForm;
+        public static OverlayForm   overlayForm;
         public static ProgramConfig config;
 
-        public static FortnitePlayer LocalPlayer = null;
-        public static List<FortnitePlayer> CurrentSquad = new List<FortnitePlayer>();
-        public static List<string> UserIdOrder = new List<string>();
+        public static HttpClient           HttpClient   = new HttpClient();
+        public static FortnitePlayer       LocalPlayer  = null;
+        public static List<FortnitePlayer> CurrentSquad = [];
+        public static List<string>         UserIdOrder  = [];
+        public static Updater              Updater = new Updater("https://api.github.com/repos/slinkstr/FortniteSquadOverlay/releases/latest", "FortniteSquadOverlay-Installer.exe", HttpClient);
 
         private static readonly string    _logFile    = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\FortniteGame\\Saved\\Logs", "FortniteGame.log");
         private static readonly LogReader _logReader  = new LogReader(_logFile, LogParser.ProcessLine, ResetProgramState);
         private static readonly ProcMon   _procMon    = new ProcMon("FortniteClient-Win64-Shipping");
-        private static HttpClient         _httpClient = new HttpClient();
 
-        private static Timer      _updateTimer        = new Timer();
+        private static Timer          _updateTimer    = new Timer();
         private static PixelPositions _pixelPositions = null;
-        private static Bitmap     _screenBuffer       = null;
-        private static DateTime   _lastDownload       = DateTime.MinValue;
-        private static DateTime   _lastUpload         = DateTime.MinValue;
+        private static Bitmap         _screenBuffer   = null;
+        private static DateTime       _lastDownload   = DateTime.MinValue;
+        private static DateTime       _lastUpload     = DateTime.MinValue;
 
-        private static Bitmap     _debugBuffer        = null;
+        private static Bitmap _debugBuffer = null;
 
         [STAThread]
         static void Main()
@@ -44,10 +45,10 @@ namespace FortniteSquadOverlayClient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            form = new MainForm();
+            mainForm = new MainForm();
             overlayForm = new OverlayForm();
 
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", $"FortniteSquadOverlay {CurrentVersion()} (+https://github.com/slinkstr/FortniteOverlay)");
+            HttpClient.DefaultRequestHeaders.Add("User-Agent", $"FortniteSquadOverlay {Updater.CurrentVersion()} (+https://github.com/slinkstr/FortniteOverlay)");
 
             if (!ConfigFileExists())
             {
@@ -61,17 +62,27 @@ namespace FortniteSquadOverlayClient
             // Squadmate order
             Task.Run(async () =>
             {
-                UserIdOrder = await GetOrder(_httpClient);
+                UserIdOrder = await GetOrder(HttpClient);
             });
 
             // Background tasks
             _logReader.Start();
             _procMon.Start();
 
-            // Update checking
             Task.Run(async () =>
             {
-                await CheckForUpdates(_httpClient);
+                try
+                {
+                    var hasUpdate = await Updater.CheckForUpdate();
+                    if (hasUpdate)
+                    {
+                        mainForm.SetUpdateNotice($"New update available ({Updater.LatestVersion()})");
+                    }
+                }
+                catch (Exception exc)
+                {
+                    mainForm.Log("Unable to check for updates. " +  exc);
+                }
             });
 
             // Rendering and upload/download events
@@ -79,12 +90,12 @@ namespace FortniteSquadOverlayClient
             _updateTimer.Interval = 500;
             _updateTimer.Start();
 
-            Application.Run(form);
+            Application.Run(mainForm);
         }
 
         public static void ResetProgramState()
         {
-            form.Log("Fortnite restarted, resetting log file.");
+            mainForm.Log("Fortnite restarted, resetting log file.");
             LocalPlayer = null;
             CurrentSquad.Clear();
         }
@@ -114,7 +125,7 @@ namespace FortniteSquadOverlayClient
             {
                 ShowOverlay();
                 overlayForm.SetOverlayOpacity(config.OverlayOpacity);
-                if (form.CurrentProgramOptions().DebugOverlay)
+                if (mainForm.CurrentProgramOptions().DebugOverlay)
                 {
                     ShowDebugOverlay();
                 }
@@ -170,13 +181,13 @@ namespace FortniteSquadOverlayClient
             string responseString = "";
             try
             {
-                response = await _httpClient.PostAsync(config.UploadEndpoint, formData);
+                response = await HttpClient.PostAsync(config.UploadEndpoint, formData);
                 responseString = response.Content.ReadAsStringAsync().Result;
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception exc)
             {
-                form.Log("Error uploading data to server.\n" +
+                mainForm.Log("Error uploading data to server.\n" +
                          "-------------------------\n" +
                          exc.ToString() + "\n" +
                          (!string.IsNullOrWhiteSpace(responseString) ? "-------------------------\nServer response:\n" + responseString : ""));
@@ -201,7 +212,7 @@ namespace FortniteSquadOverlayClient
             JArray availImages = null;
             try
             {
-                response = await _httpClient.GetAsync(config.ImageLocation);
+                response = await HttpClient.GetAsync(config.ImageLocation);
                 responseString = await response.Content.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 availImages = (JArray)JsonConvert.DeserializeObject(responseString);
@@ -209,7 +220,7 @@ namespace FortniteSquadOverlayClient
             }
             catch (Exception exc)
             {
-                form.Log("Error downloading data from server.\n" +
+                mainForm.Log("Error downloading data from server.\n" +
                          "-------------------------\n" +
                          exc.ToString() + "\n" +
                          (!string.IsNullOrWhiteSpace(responseString) ? "-------------------------\nServer response:\n" + responseString : ""));
@@ -228,12 +239,12 @@ namespace FortniteSquadOverlayClient
                     string gearUrl = config.ImageLocation.TrimEnd('/') + "/" + match["name"];
                     try
                     {
-                        response = await _httpClient.GetAsync(gearUrl);
+                        response = await HttpClient.GetAsync(gearUrl);
                         response.EnsureSuccessStatusCode();
                     }
                     catch (Exception exc)
                     {
-                        form.Log($"Error downloading gear image for {fort.Name}\n" +
+                        mainForm.Log($"Error downloading gear image for {fort.Name}\n" +
                                   "-------------------------\n" +
                                   exc.ToString() + "\n" +
                                   "-------------------------\n");
@@ -307,21 +318,21 @@ namespace FortniteSquadOverlayClient
                     {
                         overlayForm.SetSquadGear(i, CurrentSquad[i].GearImage);
                     }
-                    form.SetSquadGear(i, CurrentSquad[i].GearImage);
-                    form.SetSquadName(i, CurrentSquad[i].Name);
+                    mainForm.SetSquadGear(i, CurrentSquad[i].GearImage);
+                    mainForm.SetSquadName(i, CurrentSquad[i].Name);
                 }
                 else
                 {
                     overlayForm.SetSquadGear(i, null);
-                    form.SetSquadGear(i, null);
-                    form.SetSquadName(i, "");
+                    mainForm.SetSquadGear(i, null);
+                    mainForm.SetSquadName(i, "");
                 }
             }
 
-            form.SetSelfName(LocalPlayer?.Name);
-            form.SetSelfGear(LocalPlayer?.GearImage);
+            mainForm.SetSelfName(LocalPlayer?.Name);
+            mainForm.SetSelfGear(LocalPlayer?.GearImage);
 
-            form.ShowHideSortButtons(CurrentSquad.Count);
+            mainForm.ShowHideSortButtons(CurrentSquad.Count);
         }
     }
 

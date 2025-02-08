@@ -110,7 +110,7 @@ namespace FortniteSquadOverlayClient
             }
             catch (InvalidOperationException exc)
             {
-                Program.form.Log("Error scanning active processes.\n" + exc.ToString());
+                Program.mainForm.Log("Error scanning active processes.\n" + exc.ToString());
             }
 
             return IntPtr.Zero;

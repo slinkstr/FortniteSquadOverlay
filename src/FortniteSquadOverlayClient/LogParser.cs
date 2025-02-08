@@ -20,7 +20,7 @@ namespace FortniteSquadOverlayClient
                 {
                     if (!action.SuppressLog)
                     {
-                        Program.form.Log(FormatMatchGroups(fieldInfo.Name, match));
+                        Program.mainForm.Log(FormatMatchGroups(fieldInfo.Name, match));
                     }
                     action.Action?.Invoke(match);
                     return;

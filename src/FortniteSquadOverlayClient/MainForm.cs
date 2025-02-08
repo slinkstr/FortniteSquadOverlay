@@ -1,32 +1,33 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FortniteSquadOverlayClient
 {
     public partial class MainForm : Form
     {
-        private int consoleHeight;
-        private bool firstShow;
+        private int _consoleHeight;
+        private bool _firstShow = true;
+        private bool _updating = false;
 
         public MainForm()
         {
             InitializeComponent();
-            consoleHeight = consoleLogTextBox.Size.Height;
-            Text += " v" + MiscUtil.CurrentVersion();
+            _consoleHeight = consoleLogTextBox.Size.Height;
+            Text += " v" + Program.Updater.CurrentVersion();
             Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
             notifyIcon.Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            firstShow = true;
         }
         
         protected override bool ShowWithoutActivation
         {
             get
             {
-                if(firstShow)
+                if(_firstShow)
                 {
-                    firstShow = false;
+                    _firstShow = false;
                     return Program.config.StartMinimized;
                 }
                 return false;
@@ -165,12 +166,12 @@ namespace FortniteSquadOverlayClient
             }
         }
 
-        public void SetUpdateNotice(string text, string url = "")
+        public void SetUpdateNotice(string text)
         {
             SetControlProperty(updateNoticeLinkLabel, "Text", text);
-            SetControlProperty(updateNoticeLinkLabel, "LinkArea", string.IsNullOrWhiteSpace(url) ? new LinkArea(0, 0) : new LinkArea(0, updateNoticeLinkLabel.Text.Length));
-            SetControlProperty(updateNoticeLinkLabel, "Tag", url);
+            SetControlProperty(updateNoticeLinkLabel, "LinkArea", new LinkArea(0, updateNoticeLinkLabel.Text.Length));
             SetControlProperty(updateNoticeLinkLabel, "LinkVisited", false);
+            //SetControlProperty(updateNoticeLinkLabel, "Tag", url);
         }
 
         public void ShowHideConsole(bool showConsole)
@@ -186,8 +187,8 @@ namespace FortniteSquadOverlayClient
 
             int tableRow = mainTableLayoutPanel.GetRow(consoleLogTextBox);
             consoleLogTextBox.Visible = showConsole;
-            mainTableLayoutPanel.RowStyles[tableRow].Height = showConsole ? consoleHeight : 0;
-            Size = new System.Drawing.Size(Size.Width, Size.Height + (showConsole ? consoleHeight : consoleHeight * -1));
+            mainTableLayoutPanel.RowStyles[tableRow].Height = showConsole ? _consoleHeight : 0;
+            Size = new System.Drawing.Size(Size.Width, Size.Height + (showConsole ? _consoleHeight : _consoleHeight * -1));
         }
 
         public void ShowHideSortButtons(int squadmates)
@@ -202,9 +203,7 @@ namespace FortniteSquadOverlayClient
         {
             var max = indexA > indexB ? indexA : indexB;
             if (Program.CurrentSquad.Count < max + 1) { return; }
-            var temp = Program.CurrentSquad[indexA];
-            Program.CurrentSquad[indexA] = Program.CurrentSquad[indexB];
-            Program.CurrentSquad[indexB] = temp;
+            (Program.CurrentSquad[indexA], Program.CurrentSquad[indexB]) = (Program.CurrentSquad[indexB], Program.CurrentSquad[indexA]);
             Program.UpdateFormElements();
         }
 
@@ -258,8 +257,8 @@ namespace FortniteSquadOverlayClient
         {
             var visible = ((CheckBox)sender).Checked;
 
-            mainTableLayoutPanel.RowStyles[1].Height = (visible ? consoleHeight : 0);
-            Size = new System.Drawing.Size(Size.Width, Size.Height + (visible ? consoleHeight : consoleHeight * -1));
+            mainTableLayoutPanel.RowStyles[1].Height = (visible ? _consoleHeight : 0);
+            Size = new System.Drawing.Size(Size.Width, Size.Height + (visible ? _consoleHeight : _consoleHeight * -1));
         }
 
         private void squadmate1DownButton_Click(object sender, EventArgs e)
@@ -281,9 +280,20 @@ namespace FortniteSquadOverlayClient
 
         private void updateNoticeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var label = (LinkLabel)sender;
+            if (_updating) { return; }
+            
+            _updating = true;
+            Application.UseWaitCursor = true;
+            updateNoticeLinkLabel.Enabled = false;
             updateNoticeLinkLabel.LinkVisited = true;
-            System.Diagnostics.Process.Start(label.Tag.ToString());
+            
+            Task.Run(async () =>
+            {
+                await Program.Updater.Update();
+                _updating = false;
+                Application.UseWaitCursor = false;
+                updateNoticeLinkLabel.Enabled = true;
+            });
         }
 
         private FortnitePlayer FortniterAtUiIndex(int uiIndex)

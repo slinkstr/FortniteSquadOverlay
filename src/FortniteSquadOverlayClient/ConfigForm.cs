@@ -20,7 +20,7 @@ namespace FortniteSquadOverlayClient
         {
             ConfigLoadFields();
             autorunCheckBox.Checked = AutorunEnabled();
-            Program.form.SetAlwaysOnTop(false);
+            Program.mainForm.SetAlwaysOnTop(false);
         }
 
         // ****************************************************************************************************
@@ -149,8 +149,8 @@ namespace FortniteSquadOverlayClient
         // ****************************************************************************************************
         private void ConfigForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Program.form.ShowHideConsole(Program.config.ShowConsole);
-            Program.form.SetAlwaysOnTop(Program.config.AlwaysOnTop);
+            Program.mainForm.ShowHideConsole(Program.config.ShowConsole);
+            Program.mainForm.SetAlwaysOnTop(Program.config.AlwaysOnTop);
         }
 
         private void autostartCheckBox_CheckedChanged(object sender, EventArgs e)
