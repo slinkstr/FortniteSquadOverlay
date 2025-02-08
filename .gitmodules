@@ -1,0 +1,3 @@
+[submodule "src/FortniteSquadOverlayClientTests/test-data"]
+	path = src/FortniteSquadOverlayClientTests/test-data
+	url = https://github.com/slinkstr/FortniteSquadOverlayTestData
