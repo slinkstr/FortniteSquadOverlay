@@ -61,6 +61,22 @@ namespace FortniteSquadOverlayClientTests
             Assert.Equal(expectedResult, result);
         }
 
+        public static IEnumerable<object[]> IsSpectatingData => new List<object[]>
+        {
+            new object[] { ".\\test-data\\screens\\1080p-100hud\\dead2.png", PixelPositions.Known1080p, true },
+        };
+
+        [Theory]
+        [MemberData(nameof(IsSpectatingData))]
+        public void IsSpectating(string imagePath, PixelPositions positions, bool expectedResult)
+        {
+            Bitmap bitmap = PngToBitmap(imagePath);
+
+            var result = ImageProcessing.IsSpectating(bitmap, positions);
+
+            Assert.Equal(expectedResult, result);
+        }
+
         // ************************************************************************************************************
 
         private static Bitmap PngToBitmap(string path)
