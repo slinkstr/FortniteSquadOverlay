@@ -24,17 +24,17 @@ namespace FortniteSquadOverlayClient
         public static FortnitePlayer       LocalPlayer  = null;
         public static List<FortnitePlayer> CurrentSquad = [];
         public static List<string>         UserIdOrder  = [];
-        public static Updater              Updater = new Updater("https://api.github.com/repos/slinkstr/FortniteSquadOverlay/releases/latest", "FortniteSquadOverlay-Installer.exe", HttpClient);
+        public static Updater              Updater      = new Updater("https://api.github.com/repos/slinkstr/FortniteSquadOverlay/releases/latest", "FortniteSquadOverlay-Installer.exe", HttpClient);
 
-        private static readonly string    _logFile    = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\FortniteGame\\Saved\\Logs", "FortniteGame.log");
-        private static readonly LogReader _logReader  = new LogReader(_logFile, LogParser.ProcessLine, ResetProgramState);
-        private static readonly ProcMon   _procMon    = new ProcMon("FortniteClient-Win64-Shipping");
+        private static readonly string    _logFile      = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\FortniteGame\\Saved\\Logs", "FortniteGame.log");
+        private static readonly LogReader _logReader    = new LogReader(_logFile, LogParser.ProcessLine, ResetProgramState);
+        private static readonly ProcMon   _procMon      = new ProcMon("FortniteClient-Win64-Shipping");
 
-        private static Timer          _updateTimer    = new Timer();
-        private static PixelPositions _pixelPositions = null;
-        private static Bitmap         _screenBuffer   = null;
-        private static DateTime       _lastDownload   = DateTime.MinValue;
-        private static DateTime       _lastUpload     = DateTime.MinValue;
+        private static Timer          _updateTimer      = new Timer();
+        private static PixelPositions _pixelPositions   = null;
+        private static Bitmap         _screenBuffer     = null;
+        private static DateTime       _lastDownload     = DateTime.MinValue;
+        private static DateTime       _lastUpload       = DateTime.MinValue;
 
         private static Bitmap _debugBuffer = null;
 
@@ -125,6 +125,7 @@ namespace FortniteSquadOverlayClient
             {
                 ShowOverlay();
                 overlayForm.SetOverlayOpacity(config.OverlayOpacity);
+                overlayForm.SetHudScale((float)config.HUDScale / 100);
                 if (mainForm.CurrentProgramOptions().DebugOverlay)
                 {
                     ShowDebugOverlay();

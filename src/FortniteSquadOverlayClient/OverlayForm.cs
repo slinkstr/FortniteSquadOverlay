@@ -47,6 +47,11 @@ namespace FortniteSquadOverlayClient
             double dec = (double)opacity / 100;
             Opacity = dec;
         }
+        
+        public void SetHudScale(float scale)
+        {
+            SetImagePositions(this.Width, this.Height, scale);
+        }
 
         public static void SetControlProperty(Control control, string propertyName, object data)
         {
@@ -60,24 +65,34 @@ namespace FortniteSquadOverlayClient
             }
         }
 
+        private void SetImagePositions(int width, int height, float scale)
+        {
+            var imageWidth  = (int)(width  * 0.12500000000 * scale);
+            var imageHeight = (int)(height * 0.05555555555 * scale);
+            var imageX      = (int)(width  * 0.16796875000 * scale);
+            var imageY      = (int)(height * 0.08333333333 * scale);
+            
+            var imageSize = new System.Drawing.Size(imageWidth, imageHeight);
+
+            squadmateGearPictureBox1.Size     = imageSize;
+            squadmateGearPictureBox1.Location = new Point(imageX, imageY);
+            squadmateGearPictureBox2.Size     = imageSize;
+            squadmateGearPictureBox2.Location = new Point(imageX, imageY + imageHeight);
+            squadmateGearPictureBox3.Size     = imageSize;
+            squadmateGearPictureBox3.Location = new Point(imageX, imageY + (imageHeight * 2));
+        }
+
         // ****************************************************************************************************
         // CONTROL EVENT HANDLERS
         // ****************************************************************************************************
         private void OverlayForm_Resize(object sender, EventArgs e)
         {
-            var form = (OverlayForm)sender;
-            var width = form.Size.Width;
+            var form       = (OverlayForm)sender;
+            var width  = form.Size.Width;
             var height = form.Size.Height;
-
-            var imageSize = new System.Drawing.Size((int)(width * 0.125), (int)(height * 0.05555555555));
-            var firstImagePos = new Point((int)(width * 0.16796875), (int)(height * 0.08333333333));
-
-            squadmateGearPictureBox1.Size = imageSize;
-            squadmateGearPictureBox1.Location = firstImagePos;
-            squadmateGearPictureBox2.Size = imageSize;
-            squadmateGearPictureBox2.Location = Point.Add(firstImagePos, new System.Drawing.Size(0, imageSize.Height));
-            squadmateGearPictureBox3.Size = imageSize;
-            squadmateGearPictureBox3.Location = Point.Add(firstImagePos, new System.Drawing.Size(0, imageSize.Height * 2));
+            var scale = (float)(Program.config?.HUDScale ?? 100) / 100;
+            
+            SetImagePositions(width, height, scale);
         }
     }
 }
