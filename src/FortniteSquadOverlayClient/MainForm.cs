@@ -10,7 +10,6 @@ namespace FortniteSquadOverlayClient
     {
         private int _consoleHeight;
         private bool _firstShow = true;
-        private bool _updating = false;
 
         public MainForm()
         {
@@ -280,20 +279,49 @@ namespace FortniteSquadOverlayClient
 
         private void updateNoticeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (_updating) { return; }
-            
-            _updating = true;
-            Application.UseWaitCursor = true;
-            updateNoticeLinkLabel.Enabled = false;
-            updateNoticeLinkLabel.LinkVisited = true;
-            
-            Task.Run(async () =>
+            var taskDialog = TaskDialog.ShowDialog(new TaskDialogPage
             {
-                await Program.Updater.Update();
-                _updating = false;
-                Application.UseWaitCursor = false;
-                updateNoticeLinkLabel.Enabled = true;
+                Caption = "Update",
+                Heading = "Download update?",
+                Buttons =
+                {
+                    new TaskDialogButton
+                    {
+                        Text = "One-click update",
+                        Tag = "oneclick",
+                    },
+                    new TaskDialogButton
+                    {
+                        Text = "Open in browser",
+                        Tag = "open",
+                    },
+                    new TaskDialogButton
+                    {
+                        Text = "Cancel",
+                        Tag = "cancel",
+                    }
+                }
             });
+            
+            switch((string)taskDialog.Tag)
+            {
+                case "cancel":  return;
+                case "open":
+                    System.Diagnostics.Process.Start("explorer", "https://github.com/slinkstr/FortniteSquadOverlay/releases/latest");
+                    break;
+                case "oneclick":
+                {
+                    Application.UseWaitCursor = true;
+                    updateNoticeLinkLabel.Enabled = false;
+                    updateNoticeLinkLabel.LinkVisited = true;
+                    Task.Run(async () =>
+                    {
+                        await Program.Updater.Update();
+                        Application.UseWaitCursor = false;
+                        SetControlProperty(updateNoticeLinkLabel, "Enabled", true);
+                    });
+                } break;
+            }
         }
 
         private FortnitePlayer FortniterAtUiIndex(int uiIndex)
