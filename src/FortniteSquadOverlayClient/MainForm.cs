@@ -307,7 +307,7 @@ namespace FortniteSquadOverlayClient
             {
                 case "cancel":  return;
                 case "open":
-                    System.Diagnostics.Process.Start("explorer", "https://github.com/slinkstr/FortniteSquadOverlay/releases/latest");
+                    MiscUtil.OpenInDefaultBrowser("https://github.com/slinkstr/FortniteSquadOverlay/releases/latest");
                     break;
                 case "oneclick":
                 {
@@ -387,7 +387,7 @@ namespace FortniteSquadOverlayClient
             {
                 return;
             }
-            System.Diagnostics.Process.Start("https://fortnitetracker.com/profile/search?q=" + fortniter.UserId);
+            MiscUtil.OpenInDefaultBrowser("https://fortnitetracker.com/profile/search?q=" + fortniter.UserId);
         }
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)

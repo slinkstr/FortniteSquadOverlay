@@ -63,12 +63,12 @@ public class Updater(string releaseEndpoint, string installerFileName, HttpClien
                 await respStream.CopyToAsync(fs);
             }
         }
-        var processStartInfo = new ProcessStartInfo()
+        
+        Process.Start(new ProcessStartInfo()
         {
             FileName = tempPath,
             Arguments = "/silent",
-        };
-        var process = Process.Start(processStartInfo);
+        });
         Environment.Exit(0);
     }
 

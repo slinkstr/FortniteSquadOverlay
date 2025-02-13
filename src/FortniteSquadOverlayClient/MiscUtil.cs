@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -123,6 +124,15 @@ namespace FortniteSquadOverlayClient
         public static int MinMax(int min, int value, int max)
         {
             return Math.Min(Math.Max(min, value), max);
+        }
+        
+        public static void OpenInDefaultBrowser(string url)
+        {
+            System.Diagnostics.Process.Start(new ProcessStartInfo()
+            {
+                FileName = url,
+                UseShellExecute = true,
+            });
         }
     }
 }
