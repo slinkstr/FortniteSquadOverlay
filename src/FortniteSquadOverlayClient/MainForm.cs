@@ -39,15 +39,11 @@ namespace FortniteSquadOverlayClient
 
         public void Log(string message)
         {
+            if(consoleLogTextBox.IsDisposed) { return; }
+            
             message = message.Replace("\n", Environment.NewLine) + Environment.NewLine;
-            if (consoleLogTextBox.InvokeRequired)
-            {
-                consoleLogTextBox.Invoke(new MethodInvoker(delegate { consoleLogTextBox.AppendText(message); }));
-            }
-            else
-            {
-                consoleLogTextBox.AppendText(message);
-            }
+            if (consoleLogTextBox.InvokeRequired) { consoleLogTextBox.Invoke(new MethodInvoker(delegate { consoleLogTextBox.AppendText(message); })); }
+            else                                  { consoleLogTextBox.AppendText(message);                                                            }
         }
 
         public void MinimizeToTray()

@@ -75,25 +75,34 @@ namespace FortniteSquadOverlayClient
             alwaysOnTopCheckBox.Checked         = cfg.AlwaysOnTop;
         }
 
-        private void ConfigSaveFields()
+        private bool ConfigSaveFields()
         {
-            var cfg = new Config(Program.Config)
+            try
             {
-                SecretKey        = secretKeyTextBoxEx.Text,
-                UploadEndpoint   = uploadEndpointTextBoxEx.Text,
-                ImageLocation    = imageLocationTextBoxEx.Text,
-                UploadInterval   = (int)uploadIntervalNumericUpDown.Value,
-                DownloadInterval = (int)downloadIntervalNumericUpDown.Value,
-                HudScale         = (int)hudScaleNumericUpDown.Value,
-                OverlayOpacity   = (int)overlayOpacityNumericUpDown.Value,
-                ShowConsole      = showConsoleCheckBox.Checked,
-                EnableOverlay    = enableOverlayCheckBox.Checked,
-                MinimizeToTray   = minimizeToTrayCheckBox.Checked,
-                StartMinimized   = startMinimizedCheckBox.Checked,
-                AlwaysOnTop      = alwaysOnTopCheckBox.Checked,
-            };
-            
-            cfg.Save();
+                var cfg = new Config(Program.Config)
+                {
+                    SecretKey        = secretKeyTextBoxEx.Text,
+                    UploadEndpoint   = uploadEndpointTextBoxEx.Text,
+                    ImageLocation    = imageLocationTextBoxEx.Text,
+                    UploadInterval   = (int)uploadIntervalNumericUpDown.Value,
+                    DownloadInterval = (int)downloadIntervalNumericUpDown.Value,
+                    HudScale         = (int)hudScaleNumericUpDown.Value,
+                    OverlayOpacity   = (int)overlayOpacityNumericUpDown.Value,
+                    ShowConsole      = showConsoleCheckBox.Checked,
+                    EnableOverlay    = enableOverlayCheckBox.Checked,
+                    MinimizeToTray   = minimizeToTrayCheckBox.Checked,
+                    StartMinimized   = startMinimizedCheckBox.Checked,
+                    AlwaysOnTop      = alwaysOnTopCheckBox.Checked,
+                };
+                
+                cfg.Save();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message, Program.ProgramName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
         }
 
         private static void CreateShortcut(string dest, string targetFile)
@@ -190,7 +199,7 @@ namespace FortniteSquadOverlayClient
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            ConfigSaveFields();
+            if(!ConfigSaveFields()) { return; }
             Program.Config.Load();
             Close();
         }

@@ -107,6 +107,9 @@ namespace FortniteSquadOverlayClient
             catch(Exception exc)
             {
                 Logger.LogCritical("Unhandled exception: " + exc.ToString());
+                Logger.Flush();
+                MessageBox.Show(exc.ToString(), "Unhandled exception");
+                Environment.Exit(1);
             }
         }
 

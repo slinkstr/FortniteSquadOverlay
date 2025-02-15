@@ -47,6 +47,13 @@ public class Logger
         Debug = 5,
     }
     
+    public void Flush()
+    {
+        if(builder.Length == 0) { return; }
+        File.AppendAllText(_logFilePath, builder.ToString());
+        builder.Clear();
+    }
+    
     private async Task LogToFileLoop()
     {
         while(true)
