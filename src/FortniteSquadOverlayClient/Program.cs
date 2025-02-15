@@ -189,7 +189,7 @@ namespace FortniteSquadOverlayClient
             if ( ImageProcessing.IsDriving   (_screenBuffer, _pixelPositions)) { return; }
 
             var gearBitmap  = ImageProcessing.CropGear(_screenBuffer, _pixelPositions);
-            var gearResized = new Bitmap(gearBitmap, new System.Drawing.Size(312, 52));
+            var gearResized = new Bitmap(gearBitmap, new System.Drawing.Size( 5 * 52, 52));
             var stream      = new MemoryStream();
             gearResized.Save(stream, ImageFormat.Jpeg);
             stream.Seek(0, SeekOrigin.Begin);
