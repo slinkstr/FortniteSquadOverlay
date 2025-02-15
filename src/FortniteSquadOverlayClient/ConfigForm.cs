@@ -20,7 +20,7 @@ namespace FortniteSquadOverlayClient
         {
             ConfigLoadFields();
             autorunCheckBox.Checked = AutorunEnabled();
-            Program.mainForm.SetAlwaysOnTop(false);
+            Program.MainWindow.SetAlwaysOnTop(false);
         }
 
         // ****************************************************************************************************
@@ -59,14 +59,14 @@ namespace FortniteSquadOverlayClient
 
         private void ConfigLoadFields()
         {
-            ProgramConfig cfg = Program.config;
+            var cfg = Program.Config;
 
             secretKeyTextBoxEx.Text             = cfg.SecretKey;
             uploadEndpointTextBoxEx.Text        = cfg.UploadEndpoint;
             imageLocationTextBoxEx.Text         = cfg.ImageLocation;
             uploadIntervalNumericUpDown.Value   = MiscUtil.MinMax((int)uploadIntervalNumericUpDown.Minimum,   cfg.UploadInterval,   (int)uploadIntervalNumericUpDown.Maximum);
             downloadIntervalNumericUpDown.Value = MiscUtil.MinMax((int)downloadIntervalNumericUpDown.Minimum, cfg.DownloadInterval, (int)downloadIntervalNumericUpDown.Maximum);
-            hudScaleNumericUpDown.Value         = MiscUtil.MinMax((int)hudScaleNumericUpDown.Minimum,         cfg.HUDScale,         (int)hudScaleNumericUpDown.Maximum);
+            hudScaleNumericUpDown.Value         = MiscUtil.MinMax((int)hudScaleNumericUpDown.Minimum,         cfg.HudScale,         (int)hudScaleNumericUpDown.Maximum);
             overlayOpacityNumericUpDown.Value   = cfg.OverlayOpacity;
             showConsoleCheckBox.Checked         = cfg.ShowConsole;
             enableOverlayCheckBox.Checked       = cfg.EnableOverlay;
@@ -77,23 +77,23 @@ namespace FortniteSquadOverlayClient
 
         private void ConfigSaveFields()
         {
-            ProgramConfig cfg = new ProgramConfig()
+            var cfg = new Config(Program.Config)
             {
-                SecretKey         = secretKeyTextBoxEx.Text,
-                UploadEndpoint    = uploadEndpointTextBoxEx.Text,
-                ImageLocation     = imageLocationTextBoxEx.Text,
-                UploadInterval    = (int)uploadIntervalNumericUpDown.Value,
-                DownloadInterval  = (int)downloadIntervalNumericUpDown.Value,
-                HUDScale          = (int)hudScaleNumericUpDown.Value,
-                OverlayOpacity    = (int)overlayOpacityNumericUpDown.Value,
-                ShowConsole       = showConsoleCheckBox.Checked,
-                EnableOverlay     = enableOverlayCheckBox.Checked,
-                MinimizeToTray    = minimizeToTrayCheckBox.Checked,
-                StartMinimized    = startMinimizedCheckBox.Checked,
-                AlwaysOnTop       = alwaysOnTopCheckBox.Checked,
+                SecretKey        = secretKeyTextBoxEx.Text,
+                UploadEndpoint   = uploadEndpointTextBoxEx.Text,
+                ImageLocation    = imageLocationTextBoxEx.Text,
+                UploadInterval   = (int)uploadIntervalNumericUpDown.Value,
+                DownloadInterval = (int)downloadIntervalNumericUpDown.Value,
+                HudScale         = (int)hudScaleNumericUpDown.Value,
+                OverlayOpacity   = (int)overlayOpacityNumericUpDown.Value,
+                ShowConsole      = showConsoleCheckBox.Checked,
+                EnableOverlay    = enableOverlayCheckBox.Checked,
+                MinimizeToTray   = minimizeToTrayCheckBox.Checked,
+                StartMinimized   = startMinimizedCheckBox.Checked,
+                AlwaysOnTop      = alwaysOnTopCheckBox.Checked,
             };
-
-            MiscUtil.ConfigSave(cfg);
+            
+            cfg.Save();
         }
 
         private static void CreateShortcut(string dest, string targetFile)
@@ -149,8 +149,8 @@ namespace FortniteSquadOverlayClient
         // ****************************************************************************************************
         private void ConfigForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Program.mainForm.ShowHideConsole(Program.config.ShowConsole);
-            Program.mainForm.SetAlwaysOnTop(Program.config.AlwaysOnTop);
+            Program.MainWindow.ShowHideConsole(Program.Config.ShowConsole);
+            Program.MainWindow.SetAlwaysOnTop(Program.Config.AlwaysOnTop);
         }
 
         private void autostartCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -161,7 +161,7 @@ namespace FortniteSquadOverlayClient
 
         private void openFileLocationButton_Click(object sender, EventArgs e)
         {
-            MiscUtil.ConfigOpenFileLocation();
+            Program.Config.OpenFolder();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -184,14 +184,14 @@ namespace FortniteSquadOverlayClient
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-            Program.config = MiscUtil.ConfigLoad();
+            Program.Config.Load();
             ConfigLoadFields();
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
             ConfigSaveFields();
-            Program.config = MiscUtil.ConfigLoad();
+            Program.Config.Load();
             Close();
         }
 

@@ -24,10 +24,10 @@ namespace FortniteSquadOverlayClient
         {
             get
             {
-                if(_firstShow)
+                if (_firstShow)
                 {
                     _firstShow = false;
-                    return Program.config.StartMinimized;
+                    return Program.Config.StartMinimized;
                 }
                 return false;
             }
@@ -36,17 +36,10 @@ namespace FortniteSquadOverlayClient
         // ****************************************************************************************************
         // HELPER METHODS
         // ****************************************************************************************************
-        public ProgramOptions CurrentProgramOptions()
-        {
-            return new ProgramOptions()
-            {
-                DebugOverlay = debugOverlayCheckbox.Checked
-            };
-        }
 
         public void Log(string message)
         {
-            message = $"[{DateTime.Now}] {message.Replace("\n", Environment.NewLine)}" + Environment.NewLine;
+            message = message.Replace("\n", Environment.NewLine) + Environment.NewLine;
             if (consoleLogTextBox.InvokeRequired)
             {
                 consoleLogTextBox.Invoke(new MethodInvoker(delegate { consoleLogTextBox.AppendText(message); }));
@@ -55,26 +48,6 @@ namespace FortniteSquadOverlayClient
             {
                 consoleLogTextBox.AppendText(message);
             }
-            Console.Write(message);
-        }
-
-        public void LogDebug(string message)
-        {
-            if(!(CurrentProgramOptions().DebugOverlay))
-            {
-                return;
-            }
-
-            message = $"[{DateTime.Now}] {message.Replace("\n", Environment.NewLine)}" + Environment.NewLine;
-            if (consoleLogTextBox.InvokeRequired)
-            {
-                consoleLogTextBox.Invoke(new MethodInvoker(delegate { consoleLogTextBox.AppendText(message); }));
-            }
-            else
-            {
-                consoleLogTextBox.AppendText(message);
-            }
-            Console.Write(message);
         }
 
         public void MinimizeToTray()
@@ -175,7 +148,7 @@ namespace FortniteSquadOverlayClient
 
         public void ShowHideConsole(bool showConsole)
         {
-            if(!Visible)
+            if (!Visible)
             {
                 return;
             }
@@ -209,23 +182,26 @@ namespace FortniteSquadOverlayClient
         // ****************************************************************************************************
         // CONTROL EVENT HANDLERS
         // ****************************************************************************************************
+        
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             notifyIcon.Icon = null;
         }
+        
         private void Form1_Load(object sender, EventArgs e)
         {
-            ShowHideConsole(Program.config.ShowConsole);
-            SetAlwaysOnTop(Program.config.AlwaysOnTop);
-            if(Program.config.StartMinimized)
+            ShowHideConsole(Program.Config.ShowConsole);
+            SetAlwaysOnTop(Program.Config.AlwaysOnTop);
+            if (Program.Config.StartMinimized)
             {
                 WindowState = FormWindowState.Minimized;
                 MinimizeToTray();
             }
         }
+        
         private void Form1_Resize(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Minimized && Program.config.MinimizeToTray)
+            if (WindowState == FormWindowState.Minimized && Program.Config.MinimizeToTray)
             {
                 MinimizeToTray();
             }
@@ -234,7 +210,7 @@ namespace FortniteSquadOverlayClient
         private void editConfigButton_Click(object sender, EventArgs e)
         {
             FormCollection forms = Application.OpenForms;
-            foreach(Form form in forms)
+            foreach (Form form in forms)
             {
                 if (form.Name == "ConfigForm")
                 {
@@ -245,19 +221,13 @@ namespace FortniteSquadOverlayClient
 
             new ConfigForm().Show();
         }
+        
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
                 UnminimizeFromTray();
             }
-        }
-        private void showConsoleCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            var visible = ((CheckBox)sender).Checked;
-
-            mainTableLayoutPanel.RowStyles[1].Height = (visible ? _consoleHeight : 0);
-            Size = new System.Drawing.Size(Size.Width, Size.Height + (visible ? _consoleHeight : _consoleHeight * -1));
         }
 
         private void squadmate1DownButton_Click(object sender, EventArgs e)
@@ -414,10 +384,10 @@ namespace FortniteSquadOverlayClient
             }
             contextMenuStrip1.Items.Add(openTracker);
         }
-    }
 
-    public class ProgramOptions
-    {
-        public bool DebugOverlay;
+        private void debugOverlayCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.DebugMode = ((CheckBox)sender).Checked;
+        }
     }
 }

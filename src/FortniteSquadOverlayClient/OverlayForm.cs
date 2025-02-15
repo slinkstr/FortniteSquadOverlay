@@ -90,7 +90,7 @@ namespace FortniteSquadOverlayClient
             var form       = (OverlayForm)sender;
             var width  = form.Size.Width;
             var height = form.Size.Height;
-            var scale = (float)(Program.config?.HUDScale ?? 100) / 100;
+            var scale = (float)(Program.Config?.HudScale ?? 100) / 100;
             
             SetImagePositions(width, height, scale);
         }

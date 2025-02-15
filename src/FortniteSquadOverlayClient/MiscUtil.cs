@@ -39,8 +39,9 @@ namespace FortniteSquadOverlayClient
             }
             catch (Exception exc)
             {
-                Program.mainForm.Log("Unable to get squad order. Error:\n" + exc.ToString());
+                Program.Logger.LogError("Unable to get squad order. Error:\n" + exc.ToString());
             }
+            Program.Logger.LogInfo($"Retrieved player order, {order.Count} entries.");
 
             return order;
         }
@@ -78,49 +79,7 @@ namespace FortniteSquadOverlayClient
 
         // Don't know if it's possible to check if replays are enabled, GameUserSettings.ini doesn't have any options that mention "replay" or "demo"
         // Same with HUD scale...
-
-        public static bool ConfigFileExists()
-        {
-            if (!File.Exists(fullConfigPath))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public static ProgramConfig ConfigLoad()
-        {
-            var configText = string.Join("\n", File.ReadAllText(fullConfigPath));
-            ProgramConfig cfg = JsonConvert.DeserializeObject<ProgramConfig>(configText, new JsonSerializerSettings
-            {
-                Error = (sender, args) =>
-                {
-                    MessageBox.Show(args.ErrorContext.Error.GetBaseException().Message, "FortniteSquadOverlay", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    args.ErrorContext.Handled = true;
-                }
-            });
-
-            return cfg;
-        }
-
-        public static void ConfigSave(ProgramConfig config)
-        {
-            Directory.CreateDirectory(configFolder);
-            using (var stream = File.Create(fullConfigPath))
-            {
-                string cfgString = JsonConvert.SerializeObject(config, Formatting.Indented);
-                var cfgBytes = Encoding.UTF8.GetBytes(cfgString);
-                var cfgBytesLen = Encoding.UTF8.GetByteCount(cfgString);
-                stream.Write(cfgBytes, 0, cfgBytesLen);
-            }
-        }
-
-        public static void ConfigOpenFileLocation()
-        {
-            System.Diagnostics.Process.Start(configFolder);
-        }
-
+        
         public static int MinMax(int min, int value, int max)
         {
             return Math.Min(Math.Max(min, value), max);

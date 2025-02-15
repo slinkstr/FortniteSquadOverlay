@@ -14,7 +14,7 @@ namespace FortniteSquadOverlayClient
                 var pix = screenshot.GetPixel(pos.X, pos.Y);
                 if (BrightEnough(pix, 175)) { return true; }
             }
-            // debug: All shield indicator checks failed
+            Program.Logger.LogDebug("All shield indicator checks failed.");
             return false;
         }
 
@@ -27,7 +27,7 @@ namespace FortniteSquadOverlayClient
                 var pix = screenshot.GetPixel(pos.X, pos.Y);
                 if (!BrightEnough(pix, 255)) { return false; }
             }
-            // debug: All fuel icon checks failed
+            Program.Logger.LogDebug("All fuel icon checks failed.");
             return true;
         }
 
@@ -91,7 +91,7 @@ namespace FortniteSquadOverlayClient
                 break;
             }
 
-            // debug: Selected slot: {slotSelected}
+            Program.Logger.LogDebug($"Selected slot: {slotSelected}.");
 
             Bitmap cropped = new Bitmap(positions.SlotSize.Width * 5, positions.SlotSize.Height);
             using (Graphics g = Graphics.FromImage(cropped))
