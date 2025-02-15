@@ -3,11 +3,12 @@
 
 #include "CodeDependencies.iss"
 
-#define MyAppName      "Fortnite Squad Overlay"
-#define MyAppVersion   "1.8.1"
-#define MyAppPublisher "slinkstr"
-#define MyAppURL       "https://github.com/slinkstr/FortniteSquadOverlay"
-#define MyAppExeName   "FortniteSquadOverlayClient.exe"
+#define MyAppName       "FortniteSquadOverlay"
+#define MyAppNameSpaced "Fortnite Squad Overlay"
+#define MyAppVersion    "1.8.2"
+#define MyAppPublisher  "slinkstr"
+#define MyAppURL        "https://github.com/slinkstr/FortniteSquadOverlay"
+#define MyAppExeName    "FortniteSquadOverlayClient.exe"
 
 [Setup]
 ArchitecturesAllowed=x64compatible
@@ -16,7 +17,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{F0360C1C-C40A-4D71-81EA-3FC09C883B35}
-AppName={#MyAppName}
+AppName={#MyAppNameSpaced}
 AppVersion={#MyAppVersion}
 VersionInfoVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -44,21 +45,21 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\src\FortniteSquadOverlayClient\bin\Release\net9.0-windows\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\src\FortniteSquadOverlayClient\bin\Release\net9.0-windows\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autoprograms}\{#MyAppNameSpaced}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\{#MyAppNameSpaced}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall
 
 [InstallDelete]
-Type: files; Name: "{app}\*"
+Type: filesandordirs; Name: "{app}\*"
 
 [UninstallDelete]
-Type: files; Name: "{userstartup}\{#MyAppName}.lnk"
+Type: files; Name: "{userstartup}\{#MyAppExeName}.lnk"
 
 [Code]
 function InstallDependencies: Boolean;
@@ -88,13 +89,6 @@ begin
   //UninstallFromRegKey(HKCU, ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1')); // user install
   //UninstallFromRegKey(HKLM, ExpandConstant('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1')); // x64
   UninstallFromRegKey(HKLM, ExpandConstant('SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1')); // x32
-end;
-
-procedure CurStepChanged(CurStep: TSetupStep);
-begin
-  if(CurStep=ssInstall) then
-  begin
-  end;
 end;
 
 function InitializeSetup: Boolean;
