@@ -25,7 +25,7 @@ namespace FortniteSquadOverlayClient
                 Slots              = Slots.Select(x => ScaleAboutBottomRight(x, Resolution, scale)).ToArray(),
                 ShieldIcon         = ShieldIcon.Select(x => ScaleAboutBottomLeft(x, Resolution, scale)).ToArray(),
                 FuelIcon           = FuelIcon.Select(x => ScaleAboutBottomRight(x, Resolution, scale)).ToArray(),
-                SpectatingText     = SpectatingText.Select(x => ScaleAboutTopMiddle(x, Resolution, scale)).ToArray(),
+                SpectatingText     = SpectatingText,
                 Keys               = ScaleAboutTopRight(Keys, Resolution, scale),
             };
         }
