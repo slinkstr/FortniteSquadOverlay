@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace FortniteSquadOverlayClient
 {
@@ -16,11 +17,11 @@ namespace FortniteSquadOverlayClient
         public PixelPositions Scale(int scale)
         {
             double scaleMult = (double)scale / 100;
-
+            
             return new PixelPositions()
             {
                 Resolution         = Resolution,
-                SelectedSlotOffset = (int)(SelectedSlotOffset * scaleMult),
+                SelectedSlotOffset = (int)Math.Floor(SelectedSlotOffset * scaleMult),
                 SlotSize           = new Size((int)(SlotSize.Width * scaleMult), (int)(SlotSize.Height * scaleMult)),
                 Slots              = Slots.Select(x => ScaleAboutBottomRight(x, Resolution, scale)).ToArray(),
                 ShieldIcon         = ShieldIcon.Select(x => ScaleAboutBottomLeft(x, Resolution, scale)).ToArray(),
