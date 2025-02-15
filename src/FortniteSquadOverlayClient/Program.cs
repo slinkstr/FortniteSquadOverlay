@@ -31,6 +31,7 @@ namespace FortniteSquadOverlayClient
         public static List<FortnitePlayer> CurrentSquad = [];
         public static List<string>         UserIdOrder  = [];
         public static bool                 DebugMode    = false;
+        public static string               ProgramName  = "Fortnite Squad Overlay";
             
         private static readonly LogReader _logReader    = new LogReader(Path.Combine(_localAppData, "FortniteGame/Saved/Logs/FortniteGame.log"), LogParser.ProcessLine, ResetProgramState);
         private static readonly ProcMon   _procMon      = new ProcMon("FortniteClient-Win64-Shipping");
@@ -53,7 +54,7 @@ namespace FortniteSquadOverlayClient
             MainWindow = new MainForm();
             OverlayWindow = new OverlayForm();
 
-            HttpClient.DefaultRequestHeaders.Add("User-Agent", $"FortniteSquadOverlay {Updater.CurrentVersion()} (+https://github.com/slinkstr/FortniteOverlay)");
+            HttpClient.DefaultRequestHeaders.Add("User-Agent", $"{Program.ProgramName} {Updater.CurrentVersion()} (+https://github.com/slinkstr/FortniteOverlay)");
 
             if (!Config.Exists())
             {

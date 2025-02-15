@@ -3,7 +3,7 @@
 
 #include "CodeDependencies.iss"
 
-#define MyAppName      "FortniteSquadOverlay"
+#define MyAppName      "Fortnite Squad Overlay"
 #define MyAppVersion   "1.8.1"
 #define MyAppPublisher "slinkstr"
 #define MyAppURL       "https://github.com/slinkstr/FortniteSquadOverlay"

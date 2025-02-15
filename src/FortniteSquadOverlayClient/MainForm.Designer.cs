@@ -179,7 +179,7 @@ namespace FortniteSquadOverlayClient
             // 
             // notifyIcon
             // 
-            notifyIcon.Text = "FortniteSquadOverlay";
+            notifyIcon.Text = Program.ProgramName;
             notifyIcon.MouseClick += notifyIcon_MouseClick;
             // 
             // debugOverlayCheckbox
@@ -425,7 +425,7 @@ namespace FortniteSquadOverlayClient
             ClientSize = new System.Drawing.Size(915, 535);
             Controls.Add(mainTableLayoutPanel);
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            Text = "FortniteSquadOverlay";
+            Text = Program.ProgramName;
             FormClosed += Form1_FormClosed;
             Load += Form1_Load;
             Resize += Form1_Resize;
