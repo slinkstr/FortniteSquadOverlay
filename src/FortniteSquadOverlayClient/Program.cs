@@ -296,7 +296,7 @@ namespace FortniteSquadOverlayClient
 
         private static void ShowOverlay()
         {
-            Rectangle bounds = _procMon.WindowSize;
+            var bounds = _procMon.WindowSize;
             if (bounds.Width <= 0 || bounds.Height <= 0)
             {
                 bounds = Screen.GetBounds(Point.Empty);
@@ -309,12 +309,10 @@ namespace FortniteSquadOverlayClient
         private static void ShowDebugOverlay()
         {
             var bounds = _procMon.WindowSize;
-
             if (bounds.Width != _debugBuffer?.Width || bounds.Height != _debugBuffer?.Height)
             {
                 _debugBuffer = new Bitmap(bounds.Width, bounds.Height);
             }
-
             ImageProcessing.RenderDebugMarkers(ref _debugBuffer, _pixelPositions);
             OverlayWindow.SetDebugOverlay(_debugBuffer);
         }

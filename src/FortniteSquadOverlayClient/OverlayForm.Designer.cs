@@ -46,96 +46,93 @@ namespace FortniteSquadOverlayClient
         /// </summary>
         private void InitializeComponent()
         {
-            this.debugPictureBox = new System.Windows.Forms.PictureBox();
-            this.squadmateGearPictureBox2 = new System.Windows.Forms.PictureBox();
-            this.squadmateGearPictureBox1 = new System.Windows.Forms.PictureBox();
-            this.squadmateGearPictureBox3 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.debugPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.squadmateGearPictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.squadmateGearPictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.squadmateGearPictureBox3)).BeginInit();
-            this.SuspendLayout();
+            debugPictureBox = new System.Windows.Forms.PictureBox();
+            squadmateGearPictureBox2 = new System.Windows.Forms.PictureBox();
+            squadmateGearPictureBox1 = new System.Windows.Forms.PictureBox();
+            squadmateGearPictureBox3 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)debugPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)squadmateGearPictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)squadmateGearPictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)squadmateGearPictureBox3).BeginInit();
+            SuspendLayout();
             // 
             // debugPictureBox
             // 
-            this.debugPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.debugPictureBox.BackColor = System.Drawing.Color.Lime;
-            this.debugPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.debugPictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.debugPictureBox.Name = "debugPictureBox";
-            this.debugPictureBox.Size = new System.Drawing.Size(2560, 1440);
-            this.debugPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.debugPictureBox.TabIndex = 5;
-            this.debugPictureBox.TabStop = false;
+            debugPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            debugPictureBox.BackColor = System.Drawing.Color.Lime;
+            debugPictureBox.Location = new System.Drawing.Point(0, 0);
+            debugPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            debugPictureBox.Name = "debugPictureBox";
+            debugPictureBox.Size = new System.Drawing.Size(1920, 1080);
+            debugPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            debugPictureBox.TabIndex = 5;
+            debugPictureBox.TabStop = false;
             // 
             // squadmateGearPictureBox2
             // 
-            this.squadmateGearPictureBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.squadmateGearPictureBox2.BackColor = System.Drawing.Color.Lime;
-            this.squadmateGearPictureBox2.Location = new System.Drawing.Point(430, 200);
-            this.squadmateGearPictureBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.squadmateGearPictureBox2.Name = "squadmateGearPictureBox2";
-            this.squadmateGearPictureBox2.Size = new System.Drawing.Size(320, 80);
-            this.squadmateGearPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.squadmateGearPictureBox2.TabIndex = 3;
-            this.squadmateGearPictureBox2.TabStop = false;
+            squadmateGearPictureBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            squadmateGearPictureBox2.BackColor = System.Drawing.Color.Lime;
+            squadmateGearPictureBox2.Location = new System.Drawing.Point(0, 92);
+            squadmateGearPictureBox2.Margin = new System.Windows.Forms.Padding(0);
+            squadmateGearPictureBox2.Name = "squadmateGearPictureBox2";
+            squadmateGearPictureBox2.Size = new System.Drawing.Size(373, 92);
+            squadmateGearPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            squadmateGearPictureBox2.TabIndex = 3;
+            squadmateGearPictureBox2.TabStop = false;
             // 
             // squadmateGearPictureBox1
             // 
-            this.squadmateGearPictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.squadmateGearPictureBox1.BackColor = System.Drawing.Color.Lime;
-            this.squadmateGearPictureBox1.Location = new System.Drawing.Point(430, 120);
-            this.squadmateGearPictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.squadmateGearPictureBox1.Name = "squadmateGearPictureBox1";
-            this.squadmateGearPictureBox1.Size = new System.Drawing.Size(320, 80);
-            this.squadmateGearPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.squadmateGearPictureBox1.TabIndex = 2;
-            this.squadmateGearPictureBox1.TabStop = false;
+            squadmateGearPictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            squadmateGearPictureBox1.BackColor = System.Drawing.Color.Lime;
+            squadmateGearPictureBox1.Location = new System.Drawing.Point(0, 0);
+            squadmateGearPictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            squadmateGearPictureBox1.Name = "squadmateGearPictureBox1";
+            squadmateGearPictureBox1.Size = new System.Drawing.Size(373, 92);
+            squadmateGearPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            squadmateGearPictureBox1.TabIndex = 2;
+            squadmateGearPictureBox1.TabStop = false;
             // 
             // squadmateGearPictureBox3
             // 
-            this.squadmateGearPictureBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.squadmateGearPictureBox3.BackColor = System.Drawing.Color.Lime;
-            this.squadmateGearPictureBox3.Location = new System.Drawing.Point(430, 280);
-            this.squadmateGearPictureBox3.Margin = new System.Windows.Forms.Padding(0);
-            this.squadmateGearPictureBox3.Name = "squadmateGearPictureBox3";
-            this.squadmateGearPictureBox3.Size = new System.Drawing.Size(320, 80);
-            this.squadmateGearPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.squadmateGearPictureBox3.TabIndex = 4;
-            this.squadmateGearPictureBox3.TabStop = false;
+            squadmateGearPictureBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            squadmateGearPictureBox3.BackColor = System.Drawing.Color.Lime;
+            squadmateGearPictureBox3.Location = new System.Drawing.Point(0, 184);
+            squadmateGearPictureBox3.Margin = new System.Windows.Forms.Padding(0);
+            squadmateGearPictureBox3.Name = "squadmateGearPictureBox3";
+            squadmateGearPictureBox3.Size = new System.Drawing.Size(373, 92);
+            squadmateGearPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            squadmateGearPictureBox3.TabIndex = 4;
+            squadmateGearPictureBox3.TabStop = false;
             // 
             // OverlayForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Lime;
-            this.ClientSize = new System.Drawing.Size(2560, 1440);
-            this.Controls.Add(this.squadmateGearPictureBox3);
-            this.Controls.Add(this.squadmateGearPictureBox2);
-            this.Controls.Add(this.squadmateGearPictureBox1);
-            this.Controls.Add(this.debugPictureBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "OverlayForm";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.Text = "OverlayForm";
-            this.TopMost = true;
-            this.TransparencyKey = System.Drawing.Color.Lime;
-            this.Resize += new System.EventHandler(this.OverlayForm_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.debugPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.squadmateGearPictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.squadmateGearPictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.squadmateGearPictureBox3)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.Color.Lime;
+            ClientSize = new System.Drawing.Size(1920, 1080);
+            Controls.Add(squadmateGearPictureBox3);
+            Controls.Add(squadmateGearPictureBox2);
+            Controls.Add(squadmateGearPictureBox1);
+            Controls.Add(debugPictureBox);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            Text = "OverlayForm";
+            TopMost = true;
+            TransparencyKey = System.Drawing.Color.Lime;
+            Resize += OverlayForm_Resize;
+            ((System.ComponentModel.ISupportInitialize)debugPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)squadmateGearPictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)squadmateGearPictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)squadmateGearPictureBox3).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
-        private PictureBox debugPictureBox;
-        private PictureBox squadmateGearPictureBox2;
-        private PictureBox squadmateGearPictureBox1;
-        private PictureBox squadmateGearPictureBox3;
+        private System.Windows.Forms.PictureBox debugPictureBox;
+        private System.Windows.Forms.PictureBox squadmateGearPictureBox2;
+        private System.Windows.Forms.PictureBox squadmateGearPictureBox1;
+        private System.Windows.Forms.PictureBox squadmateGearPictureBox3;
     }
 }
