@@ -19,10 +19,16 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-	<ApplicationIcon>FortniteOverlay.ico</ApplicationIcon>
-	<ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-	<OutputType>WinExe</OutputType>
-	<Version>1.8.2</Version>
+    <ApplicationIcon>FortniteOverlay.ico</ApplicationIcon>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <OutputType>WinExe</OutputType>
+    <Version>1.8.2</Version>
+    <Title>Fortnite Squad Overlay</Title>
+    <AssemblyTitle>Fortnite Squad Overlay</AssemblyTitle>
+    <AssemblyProduct>Fortnite Squad Overlay</AssemblyProduct>
+    <Authors>slinkstr</Authors>
+    <Company />
+    <Product>Fortnite Squad Overlay</Product>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
