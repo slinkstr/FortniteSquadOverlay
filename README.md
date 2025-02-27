@@ -1,4 +1,4 @@
-# FortniteSquadOverlay
+# Fortnite Squad Overlay
 
 ![Screenshot of the overlay in-game.](preview-ingame.png)
 
@@ -15,6 +15,12 @@ Downloads ~5MB/hr per squadmate and uploads ~5MB/hr. Doesn't download or upload 
 Config file is %LOCALAPPDATA%/FortniteOverlay/config.json.
 
 Secret key, upload endpoint, and image location need to be provided by your server host.
+
+## Limitations
+
+* Does not support exclusive fullscreen mode.
+* Does not support HDR.
+* HUD scale must be set manually.
 
 ## [Server Setup](SERVER-SETUP.md)
 
