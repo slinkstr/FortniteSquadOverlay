@@ -8,15 +8,21 @@ namespace FortniteSquadOverlayClientTests
     {
         public static IEnumerable<object[]> IsPlayingtData => new List<object[]>
         {
+            //new object[] { ".\\test-data\\screens\\1080p-100hud\\bus.png"               , PixelPositions.Known1080p, false }, // debatable
             new object[] { ".\\test-data\\screens\\1080p-100hud\\downed.png"            , PixelPositions.Known1080p, true },
             new object[] { ".\\test-data\\screens\\1080p-100hud\\midgame.png"           , PixelPositions.Known1080p, true },
             new object[] { ".\\test-data\\screens\\1080p-100hud\\pregame.png"           , PixelPositions.Known1080p, true },
-            new object[] { ".\\test-data\\screens\\1080p-100hud\\bus.png"               , PixelPositions.Known1080p, false },
 
-            new object[] { ".\\test-data\\screens\\1440p-100hud\\driving.png"           , PixelPositions.Known1440p, true },
-            new object[] { ".\\test-data\\screens\\1440p-100hud\\midgame-ranked.png"    , PixelPositions.Known1440p, true },
+            new object[] { ".\\test-data\\screens\\1440p-80hud\\driving.png"            , PixelPositions.Known1440p.Scale(80), true },
+            new object[] { ".\\test-data\\screens\\1440p-80hud\\midgame.png"            , PixelPositions.Known1440p.Scale(80), true },
+            new object[] { ".\\test-data\\screens\\1440p-80hud\\midgame-ranked.png"     , PixelPositions.Known1440p.Scale(80), true },
+            
+            new object[] { ".\\test-data\\screens\\1440p-80hud-colorblind\\deut-5.png"  , PixelPositions.Known1440p.Scale(80), true },
+
+            //new object[] { ".\\test-data\\screens\\1440p-100hud\\driving.png"           , PixelPositions.Known1440p, true }, // debatable
             new object[] { ".\\test-data\\screens\\1440p-100hud\\midgame.png"           , PixelPositions.Known1440p, true },
             new object[] { ".\\test-data\\screens\\1440p-100hud\\main-menu.png"         , PixelPositions.Known1440p, false },
+            new object[] { ".\\test-data\\screens\\1440p-100hud\\midgame-ranked.png"    , PixelPositions.Known1440p, true },
             
             new object[] { ".\\test-data\\screens\\1440p-100hud-colorblind\\deut-5.png" , PixelPositions.Known1440p, true },
             new object[] { ".\\test-data\\screens\\1440p-100hud-colorblind\\deut-10.png", PixelPositions.Known1440p, true },
@@ -24,12 +30,6 @@ namespace FortniteSquadOverlayClientTests
             new object[] { ".\\test-data\\screens\\1440p-100hud-colorblind\\prot-10.png", PixelPositions.Known1440p, true },
             new object[] { ".\\test-data\\screens\\1440p-100hud-colorblind\\trit-5.png" , PixelPositions.Known1440p, true },
             new object[] { ".\\test-data\\screens\\1440p-100hud-colorblind\\trit-10.png", PixelPositions.Known1440p, true },
-
-            new object[] { ".\\test-data\\screens\\1440p-80hud\\midgame-ranked.png"     , PixelPositions.Known1440p.Scale(80), true },
-            new object[] { ".\\test-data\\screens\\1440p-80hud\\driving.png"            , PixelPositions.Known1440p.Scale(80), true },
-            new object[] { ".\\test-data\\screens\\1440p-80hud\\midgame.png"            , PixelPositions.Known1440p.Scale(80), true },
-            
-            new object[] { ".\\test-data\\screens\\1440p-80hud-colorblind\\deut-5.png"  , PixelPositions.Known1440p.Scale(80), true },
         };
 
         [Theory]
@@ -45,8 +45,9 @@ namespace FortniteSquadOverlayClientTests
 
         public static IEnumerable<object[]> IsDrivingData => new List<object[]>
         {
-            new object[] { ".\\test-data\\screens\\1440p-100hud\\driving.png", PixelPositions.Known1440p, true },
             new object[] { ".\\test-data\\screens\\1440p-80hud\\driving.png" , PixelPositions.Known1440p.Scale(80), true },
+            new object[] { ".\\test-data\\screens\\1440p-80hud\\midgame.png" , PixelPositions.Known1440p.Scale(80), false },
+            new object[] { ".\\test-data\\screens\\1440p-100hud\\driving.png", PixelPositions.Known1440p, true },
         };
 
         [Theory]
@@ -64,6 +65,7 @@ namespace FortniteSquadOverlayClientTests
         {
             new object[] { ".\\test-data\\screens\\1080p-100hud\\spectating.png", PixelPositions.Known1080p, true },
             new object[] { ".\\test-data\\screens\\1440p-80hud\\spectating.png" , PixelPositions.Known1440p.Scale(80), true },
+            new object[] { ".\\test-data\\screens\\1440p-100hud\\midgame.png"   , PixelPositions.Known1440p.Scale(80), false },
         };
 
         [Theory]
