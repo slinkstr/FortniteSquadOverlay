@@ -53,7 +53,7 @@ public class Updater(string releaseEndpoint, string installerFileName, HttpClien
     {
         if (!CanUpdate()) { return; }
 
-        string tempPath = Path.Combine(Path.GetTempPath(), "FortniteSquadOverlayUpdater.exe");
+        string tempPath = Path.Combine(Path.GetTempPath(), installerFileName);
         var response = await _httpClient.GetAsync(_latestInstallUrl);
         using (Stream respStream = await response.Content.ReadAsStreamAsync())
         {
