@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace FortniteSquadOverlayClient
 {
-    internal class LogParser
+    internal static class LogParser
     {
         private static FieldInfo[] LogRegexFields = typeof(FortniteLogActions).GetFields(BindingFlags.Static | BindingFlags.Public);
 
@@ -35,7 +35,7 @@ namespace FortniteSquadOverlayClient
             {
                 output += $"{group.Name}: {group.Value}, ";
             }
-            output = name + (string.IsNullOrWhiteSpace(output) ? "" : " - " + output.TrimEnd(new char[] { ' ', ',' }));
+            output = name + (string.IsNullOrWhiteSpace(output) ? "" : " - " + output.TrimEnd(' ', ','));
             return output;
         }
 
@@ -90,7 +90,7 @@ namespace FortniteSquadOverlayClient
                     };
                     newJoin.Index = Program.UserIdOrder.IndexOf(newJoin.UserIdTruncated);
                     Program.CurrentSquad.Add(newJoin);
-                    Program.CurrentSquad.Sort(MiscUtil.SortFortniters);
+                    Program.CurrentSquad.Sort(MiscUtil.SortFortnitePlayers);
                 },
             };
 

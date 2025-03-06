@@ -7,40 +7,40 @@ namespace FortniteSquadOverlayClient
     {
         public static bool IsPlaying(Bitmap screenshot, PixelPositions positions)
         {
-            if (screenshot == null) { return false; };
+            if (screenshot == null) { return false; }
 
             foreach (var pos in positions.ShieldIcon)
             {
                 var pix = screenshot.GetPixel(pos.X, pos.Y);
                 if (BrightEnough(pix, 175)) { return true; }
             }
-            Program.Logger.LogDebug("All shield indicator checks failed.");
+            Program.Logger.LogDebug("Could not detect shield icon.");
             return false;
         }
 
         public static bool IsDriving(Bitmap screenshot, PixelPositions positions)
         {
-            if (screenshot == null) { return false; };
+            if (screenshot == null) { return false; }
 
             foreach (var pos in positions.FuelIcon)
             {
                 var pix = screenshot.GetPixel(pos.X, pos.Y);
                 if (!BrightEnough(pix, 255)) { return false; }
             }
-            Program.Logger.LogDebug("All fuel icon checks failed.");
+            Program.Logger.LogDebug("Detected driving.");
             return true;
         }
 
         public static bool IsSpectating(Bitmap screenshot, PixelPositions positions)
         {
-            if (screenshot == null) { return false; };
+            if (screenshot == null) { return false; }
 
             foreach (var pos in positions.SpectatingText)
             {
                 var pix = screenshot.GetPixel(pos.X, pos.Y);
                 if (!BrightEnough(pix, 255)) { return false; }
             }
-
+            Program.Logger.LogDebug("Detected spectating.");
             return true;
         }
 
@@ -105,7 +105,7 @@ namespace FortniteSquadOverlayClient
                                 GraphicsUnit.Pixel);
                 }
 
-                // keys (defunct)
+                // keys (defunct but keeping commented in case they add it back)
                 //g.DrawImage(bmp,
                 //            new Rectangle(positions.SlotSize.Width * 5, 0, positions.SlotSize.Width, positions.SlotSize.Height),
                 //            new Rectangle(positions.Keys.X, positions.Keys.Y, positions.SlotSize.Width, positions.SlotSize.Height),
@@ -126,7 +126,7 @@ namespace FortniteSquadOverlayClient
                     g.DrawRectangle(pen, new Rectangle(slot.X - 1, slot.Y - 1, positions.SlotSize.Width + 1, positions.SlotSize.Height + 1));
                 }
 
-                // keys are defunct
+                // keys (defunct but keeping commented in case they add it back)
                 //g.DrawRectangle(pen, new Rectangle(positions.Keys.X - 1, positions.Keys.Y - 1, positions.SlotSize.Width + 1, positions.SlotSize.Height + 1));
 
                 foreach (var pos in positions.ShieldIcon)

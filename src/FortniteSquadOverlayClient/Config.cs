@@ -27,7 +27,7 @@ public class Config(string directory, string filename) : ProgramConfig(directory
         }
     }
 
-    private string _imageLocation = "http://example.com/fortnitegear/images/";
+    private string _imageLocation = "https://example.com/fortnitegear/images/";
     public string ImageLocation
     {
         get => _imageLocation;

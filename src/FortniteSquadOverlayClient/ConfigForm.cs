@@ -3,12 +3,16 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace FortniteSquadOverlayClient
 {
     public partial class ConfigForm : Form
     {
+        private static Regex _uploadEndpointRegex = new Regex(@"^(https?://)?(.+\..+|localhost)(:\d+)?(\/.*)*\.php$", RegexOptions.Compiled);
+        private static Regex _imageLocationRegex  = new Regex(@"^(https?://)?(.+\..+|localhost)(:\d+)?(\/.*)*\/$", RegexOptions.Compiled);
+        
         public ConfigForm()
         {
             InitializeComponent();
@@ -181,7 +185,7 @@ namespace FortniteSquadOverlayClient
         private void imageLocationTextBoxEx_TextChanged(object sender, EventArgs e)
         {
             TextBoxEx textBox = (TextBoxEx)sender;
-            if (MiscUtil.imageLocationRegex.Match(textBox.Text).Success)
+            if (_imageLocationRegex.Match(textBox.Text).Success)
             {
                 textBox.BorderColor = Color.Green;
             }
@@ -207,7 +211,7 @@ namespace FortniteSquadOverlayClient
         private void uploadEndpointTextBoxEx_TextChanged(object sender, EventArgs e)
         {
             TextBoxEx textBox = (TextBoxEx)sender;
-            if (MiscUtil.uploadEndpointRegex.Match(textBox.Text).Success)
+            if (_uploadEndpointRegex.Match(textBox.Text).Success)
             {
                 textBox.BorderColor = Color.Green;
             }

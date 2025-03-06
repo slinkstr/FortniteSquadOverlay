@@ -75,6 +75,7 @@ public class Updater(string releaseEndpoint, string installerFileName, HttpClien
     public string CurrentVersion()
     {
         var ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        if (ver == null) { throw new Exception("Unable to get assembly version."); }
         return $"{ver.Major}.{ver.Minor}.{ver.Build}";
     }
     

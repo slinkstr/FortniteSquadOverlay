@@ -27,8 +27,8 @@ namespace FortniteSquadOverlayClient
             ProcessName = processName;
             _onChange   = onChange;
 
-            _handleTimer = new Timer((e) => UpdateHandle(), null, 0, Timeout.Infinite);
-            _focusTimer  = new Timer((e) => UpdateFocus() , null, 0, Timeout.Infinite);
+            _handleTimer = new Timer((_) => UpdateHandle(), null, 0, Timeout.Infinite);
+            _focusTimer  = new Timer((_) => UpdateFocus() , null, 0, Timeout.Infinite);
 
             if (autostart)
             {
@@ -110,7 +110,7 @@ namespace FortniteSquadOverlayClient
             }
             catch (InvalidOperationException exc)
             {
-                Program.Logger.LogError("Error scanning active processes.\n" + exc.ToString());
+                Program.Logger.LogError("Error scanning active processes.\n" + exc);
             }
 
             return IntPtr.Zero;

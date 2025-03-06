@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace FortniteSquadOverlayClient
 {
-    internal class ImageUtil
+    internal static class ImageUtil
     {
         public static void TakeScreenshot(ref Bitmap startingBitmap, Rectangle bounds)
         {

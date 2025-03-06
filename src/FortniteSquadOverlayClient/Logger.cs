@@ -8,7 +8,7 @@ namespace FortniteSquadOverlayClient;
 public class Logger
 {
     private string _logFilePath;
-    private StringBuilder builder = new();
+    private StringBuilder _builder = new();
     
     public LogSeverity LogLevel { get; set; } = LogSeverity.Info;
     
@@ -25,7 +25,7 @@ public class Logger
         
         string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss zz}] [{severity}] {message}";
         
-        builder.AppendLine(logMessage);
+        _builder.AppendLine(logMessage);
         Console.WriteLine(logMessage);
         Program.MainWindow.Log(logMessage);
     }
@@ -49,9 +49,9 @@ public class Logger
     
     public void Flush()
     {
-        if(builder.Length == 0) { return; }
-        File.AppendAllText(_logFilePath, builder.ToString());
-        builder.Clear();
+        if(_builder.Length == 0) { return; }
+        File.AppendAllText(_logFilePath, _builder.ToString());
+        _builder.Clear();
     }
     
     private async Task LogToFileLoop()
@@ -60,9 +60,9 @@ public class Logger
         {
             await Task.Delay(1000);
             
-            if(builder.Length == 0) { continue; }
-            await File.AppendAllTextAsync(_logFilePath, builder.ToString());
-            builder.Clear();
+            if(_builder.Length == 0) { continue; }
+            await File.AppendAllTextAsync(_logFilePath, _builder.ToString());
+            _builder.Clear();
         }
     }
 }

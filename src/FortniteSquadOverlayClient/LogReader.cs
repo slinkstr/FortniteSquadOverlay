@@ -8,7 +8,7 @@ namespace FortniteSquadOverlayClient
 {
     internal class LogReader
     {
-        private static readonly int[] _newlineChars = new int[] { 10, 13 };
+        private static readonly int[] _newlineChars = [ 10, 13 ];
 
         public bool Active { get; private set; } = false;
         public int  SleepDurationMs { get; set; } = 1000;

@@ -107,7 +107,7 @@ namespace FortniteSquadOverlayClient
             }
             catch(Exception exc)
             {
-                Logger.LogCritical("Unhandled exception: " + exc.ToString());
+                Logger.LogCritical("Unhandled exception: " + exc);
                 Logger.Flush();
                 MessageBox.Show(exc.ToString(), "Unhandled exception");
                 Environment.Exit(1);
@@ -126,8 +126,7 @@ namespace FortniteSquadOverlayClient
             _updateTimer.Stop();
             _updateTimer.Interval = 500 * (_procMon.ValidHandle() ? 1 : 20);
             
-            if (DebugMode) { Logger.LogLevel = Logger.LogSeverity.Debug; }
-            else           { Logger.LogLevel = Logger.LogSeverity.Info;  }
+            Logger.LogLevel = DebugMode ? Logger.LogSeverity.Debug : Logger.LogSeverity.Info;
 
             if (_procMon.ValidHandle())
             {
@@ -213,7 +212,7 @@ namespace FortniteSquadOverlayClient
             {
                 string err = "Error uploading data to server.\n" +
                              "-------------------------\n" +
-                             exc.ToString() + "\n" +
+                             exc + "\n" +
                              (!string.IsNullOrWhiteSpace(responseString) ? "-------------------------\nServer response:\n" + responseString : "");
                 
                 Logger.LogError(err);
@@ -248,7 +247,7 @@ namespace FortniteSquadOverlayClient
             {
                 string err = "Error downloading data from server.\n" +
                              "-------------------------\n" +
-                             exc.ToString() + "\n" +
+                             exc + "\n" +
                              (!string.IsNullOrWhiteSpace(responseString) ? "-------------------------\nServer response:\n" + responseString : "");
                 
                 Logger.LogError(err);
@@ -274,7 +273,7 @@ namespace FortniteSquadOverlayClient
                     {
                         string err = $"Error downloading gear image for {fort.Name}\n" +
                                      "-------------------------\n" +
-                                     exc.ToString() + "\n" +
+                                     exc + "\n" +
                                      "-------------------------\n";
                         Logger.LogError(err);
                         continue;
@@ -320,16 +319,15 @@ namespace FortniteSquadOverlayClient
         public static void UpdateFormElements()
         {
             var gearFadeTargets = new List<FortnitePlayer>() { LocalPlayer }.Concat(CurrentSquad);
-            foreach (var fortniter in gearFadeTargets)
+            foreach (var player in gearFadeTargets)
             {
-                if (fortniter == null) { continue; }
+                if (player == null)                                       { continue; }
+                if (player.GearImage == null)                             { continue; }
+                if (player.IsFaded)                                       { continue; }
+                if (player.GearModified.AddSeconds(20) > DateTime.UtcNow) { continue; }
 
-                if (fortniter.GearImage == null)                             { continue; }
-                if (fortniter.IsFaded)                                       { continue; }
-                if (fortniter.GearModified.AddSeconds(20) > DateTime.UtcNow) { continue; }
-
-                fortniter.GearImage = ImageProcessing.MarkStaleImage(fortniter.GearImage);
-                fortniter.IsFaded   = true;
+                player.GearImage = ImageProcessing.MarkStaleImage(player.GearImage);
+                player.IsFaded   = true;
             }
 
             var activePlayers = CurrentSquad.Where(x => x.State != FortnitePlayer.ReadyState.SittingOut);
@@ -337,14 +335,7 @@ namespace FortniteSquadOverlayClient
             {
                 if (CurrentSquad.Count > i)
                 {
-                    if (CurrentSquad[i].IsFaded)
-                    {
-                        OverlayWindow.SetSquadGear(i, null);
-                    }
-                    else
-                    {
-                        OverlayWindow.SetSquadGear(i, CurrentSquad[i].GearImage);
-                    }
+                    OverlayWindow.SetSquadGear(i, CurrentSquad[i].IsFaded ? null : CurrentSquad[i].GearImage);
                     MainWindow.SetSquadGear(i, CurrentSquad[i].GearImage);
                     MainWindow.SetSquadName(i, CurrentSquad[i].Name);
                 }
