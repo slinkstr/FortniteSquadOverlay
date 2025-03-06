@@ -30,6 +30,7 @@ namespace FortniteSquadOverlayClient
                 Program.Logger.LogError("Unable to get squad order. Error:\n" + exc);
             }
             Program.Logger.LogInfo($"Retrieved player order, {order.Count} entries.");
+            Program.CurrentSquad.Sort(SortFortnitePlayers);
 
             return order;
         }
