@@ -330,14 +330,14 @@ namespace FortniteSquadOverlayClient
                 player.IsFaded   = true;
             }
 
-            var activePlayers = CurrentSquad.Where(x => x.State != FortnitePlayer.ReadyState.SittingOut);
+            var activePlayers = CurrentSquad.Where(x => x.State != FortnitePlayer.ReadyState.SittingOut).ToList();
             for (int i = 0; i < 3; i++)
             {
-                if (CurrentSquad.Count > i)
+                if (activePlayers.Count > i)
                 {
-                    OverlayWindow.SetSquadGear(i, CurrentSquad[i].IsFaded ? null : CurrentSquad[i].GearImage);
-                    MainWindow.SetSquadGear(i, CurrentSquad[i].GearImage);
-                    MainWindow.SetSquadName(i, CurrentSquad[i].Name);
+                    OverlayWindow.SetSquadGear(i, activePlayers[i].IsFaded ? null : activePlayers[i].GearImage);
+                    MainWindow.SetSquadGear(i, activePlayers[i].GearImage);
+                    MainWindow.SetSquadName(i, activePlayers[i].Name);
                 }
                 else
                 {
@@ -350,7 +350,7 @@ namespace FortniteSquadOverlayClient
             MainWindow.SetSelfName(LocalPlayer?.Name);
             MainWindow.SetSelfGear(LocalPlayer?.GearImage);
 
-            MainWindow.ShowHideSortButtons(CurrentSquad.Count);
+            MainWindow.ShowHideSortButtons(activePlayers.Count);
         }
     }
 }
