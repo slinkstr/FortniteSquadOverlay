@@ -58,7 +58,7 @@ namespace FortniteSquadOverlayClient
             private static readonly string LineStart = "^" + Timestamp + UnknownId;
             private static readonly RegexOptions regexOptions = RegexOptions.Compiled | RegexOptions.Singleline;
 
-            public static LogAction LoggedIn = new LogAction(new Regex(LineStart + @"LogOnlineAccount: Display: \[UOnlineAccountCommon::ProcessUserLogin\] Successfully logged in user\. UserId=\[(?<UserId>[0-9a-fA-F]{32})\] DisplayName=\[(?<DisplayName>.{1,16})\] EpicAccountId=\[MCP:[0-9a-fA-F]{32}\] AuthTicket=\[<Redacted>\]$", regexOptions))
+            public static LogAction LoggedIn = new LogAction(new Regex(LineStart + @"LogOnlineAccount: Display: \[OnlineAccount:0\]\[process_user_login\] Successfully logged in user\. UserId=\[(?<UserId>[0-9a-fA-F]{32})\] DisplayName=\[(?<DisplayName>.{1,16})\] EpicAccountId=\[MCP:[0-9a-fA-F]{32}\] AuthTicket=\[<Redacted>\]$", regexOptions))
             {
                 Action = (match) =>
                 {
