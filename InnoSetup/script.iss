@@ -5,7 +5,7 @@
 
 #define MyAppName       "FortniteSquadOverlay"
 #define MyAppNameSpaced "Fortnite Squad Overlay"
-#define MyAppVersion    "1.8.3"
+#define MyAppVersion    "1.8.4"
 #define MyAppPublisher  "slinkstr"
 #define MyAppURL        "https://github.com/slinkstr/FortniteSquadOverlay"
 #define MyAppExeName    "FortniteSquadOverlayClient.exe"
